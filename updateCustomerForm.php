@@ -36,7 +36,11 @@ if (isset($_GET['CustomerID'])) {
             
                 <label for="name" class="col-sm-2 col-form-label"> ชื่อ:  </label>
               
-                <input type="text" name="Name" class="form-control" required value=<?=$result['Name']?>>           
+                <input type="text" name="Name" class="form-control" required value=<?=$result['Name']?>>        
+                
+                 <label for="birthdate" class="col-sm-2 col-form-label">  :วันเกิด  </label>
+              
+                <input type="date" name="Birthdate" class="form-control" required value=<?=$result['Birthdate']?>>
            
             
                 <label for="name" class="col-sm-2 col-form-label"> อีเมล์ :  </label>
