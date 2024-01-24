@@ -1,40 +1,42 @@
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <?php
 
-require('______________');
-
-
-$sql = "                              ";
-$stml = $conn->prepare($sql);
-$stml->bindParam(                        );
- echo '
-    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">';
-    
-if(                       ){
-   // $message = "Successfully delete customer".$_GET['CustomerID'].".";
-           echo '
-        <script type="text/javascript">
-        
- 
-
-
-
-
-        
-        
-        </script>
-        ';
-
-
-}else{
-    $message = "Fail to delete customer information.";
+if (isset($_GET['CustomerID'])) {
+    $strCustomerID = ($_GET['CustomerID']);
 }
+require 'connect.php';
+$sql = "DELETE FROM customer WHERE CustomerID = :CustomerID ";
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':CustomerID', $_GET['CustomerID']);
+$stmt->execute(); // Execute the update query
 
-$conn = null;
-
-//header("Location:index.php");
-
+//if ($stmt->rowCount() > 0) {
+    echo '<script type="text/javascript">
+            $(document).ready(function(){
+              Swal.fire({
+                title: DELETED",
+              text: "ลบข้อมูลแล้ว",
+                icon: "success",
+                confirmButtonText: "ยอดเยี่ยมเลย",
+              }).then(function(){
+               window.location.href = "index.php";
+              });
+            });
+          </script>';
+//} else {
+  /*  echo '<script type="text/javascript">
+            $(document).ready(function(){
+              Swal.fire({
+                title: "ไม่สำเร็จ",
+                text: "ไม่สามารถลบได้",
+                icon: "warning",
+                confirmButtonText: "ok",
+              }).then(function(){
+                window.location.href = "index.php";
+              });
+            });
+          </script>';
+}
+*/
 ?>
-
-

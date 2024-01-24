@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_POST['CustomerID'])) {
-    require '______________';
+    require 'connect.php';
 
     $CustomerID = $_POST['CustomerID'];
     $Name = $_POST['Name'];

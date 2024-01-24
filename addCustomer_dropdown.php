@@ -24,7 +24,7 @@
 
 <body>
     <?php
-    require '______________';
+    require 'connect.php';
 
     $sql_select = 'select * from country order by CountryCode';
     $stmt_s = $conn->prepare($sql_select);
@@ -35,27 +35,27 @@
         if (!empty($_POST['customerID']) && !empty($_POST['name']) ) {
             echo '<br>' . $_POST['customerID'];
 
-            $uploadFile = $_FILES['image']['name'];
-            $tmpFile = $_FILES['image']['tmp_name'];
+            $uploadFile = $_FILES['Image']['name'];
+            $tmpFile = $_FILES['Image']['tmp_name'];
             echo " upload file = " . $uploadFile;
             echo " tmp file = " . $tmpFile;
 
             $sql = "insert into customer 
 							values (:customerID, :Name, :birthdate, :email, :countrycode,
-							:outstandingDebt, :image)";
+							:outstandingDebt, :Image)";
 
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':customerID', $_POST['customerID']);
             $stmt->bindParam(':Name', $_POST['name']);
             $stmt->bindParam(':birthdate', $_POST['birthdate']);
             $stmt->bindParam(':email', $_POST['email']);
-            $stmt->bindParam(':countrycode', $_POST['countrycode']);
+            $stmt->bindParam(':countrycode', $_POST['CountryCode']);
             $stmt->bindParam(':outstandingDebt', $_POST['outstandingDebt']);
-            $stmt->bindParam(':image', $uploadFile);
-            echo "image = " . $uploadFile;
+            $stmt->bindParam(':Image', $uploadFile);
+            echo "Image = " . $uploadFile;
 
 
-            $fullpath = "../image/" . $uploadFile;
+            $fullpath = "./Image/" . $uploadFile;
             echo " fullpath = " . $fullpath;
             move_uploaded_file($tmpFile, $fullpath);
 
@@ -115,17 +115,19 @@
                     <input type="number" placeholder="OutStanding debt" name="outstandingDebt">
                     <br> <br>
                     <label>Select a country code</label>
-                    <select name="                ">
-                        <?php  
-
-
-
-
-                        <?php } ?>
+                    <select name="CountryCode">
+                         <?php while ($cc = $stmt_s->fetch(PDO::FETCH_ASSOC)) :
+    ?>
+        <option value="<?php echo $cc['CountryCode'] ?>">
+            <?php echo $cc['CountryName'] ?>
+        </option>
+    <?php
+    endwhile;
+    ?>
                     </select>
                     <br> <br>
                     แนบรูปภาพ:
-                    <input type="________" name=__________________ required>
+                    <input type="file" name="Image" required>
                     <br><br>
                     <input type="submit" value="Submit" name="submit" />
                 </form>
